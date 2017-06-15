@@ -1,5 +1,8 @@
 package org.bbelovic.kata.minesweeper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MineField {
 
     private String mines;
@@ -25,6 +28,15 @@ public class MineField {
     public MineFieldPosition moveForward() {
         position = position + 1;
         char fieldValue = mines.toCharArray()[position];
-        return new MineFieldPosition(fieldValue);
+        List<Character> neighbours = new ArrayList<>();
+        if (position - 1 >= 0) {
+            // add left neighbour
+            neighbours.add(mines.toCharArray()[position - 1]);
+        }
+        if (position + 1 < mines.toCharArray().length) {
+            // add right
+            neighbours.add(mines.toCharArray()[position + 1]);
+        }
+        return new MineFieldPosition(fieldValue, neighbours);
     }
 }

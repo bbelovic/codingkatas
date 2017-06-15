@@ -44,10 +44,17 @@ public class MineFieldShould {
         MineFieldPosition position = mineField.moveForward();
         assertNotNull(position);
         assertFalse(position.isMineField());
+        assertEquals(1L, position.getNumberOfAdjacentMines());
         mineField.canMoveForward();
         position = mineField.moveForward();
         assertNotNull(position);
         assertTrue(position.isMineField());
+        assertEquals(0L, position.getNumberOfAdjacentMines());
+        mineField.canMoveForward();
+        position = mineField.moveForward();
+        assertNotNull(position);
+        assertFalse(position.isMineField());
+        assertEquals(1, position.getNumberOfAdjacentMines());
 
     }
 

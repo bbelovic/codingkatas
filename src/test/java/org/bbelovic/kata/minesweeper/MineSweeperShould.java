@@ -1,7 +1,8 @@
 package org.bbelovic.kata.minesweeper;
 
-import org.junit.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class MineSweeperShould {
 
@@ -12,13 +13,16 @@ public class MineSweeperShould {
                 {"*...", "*100"},
                 {".*..", "1*10"},
                 {"*.*.", "*2*1"},
-                {"....", "0000"}
+                {"....", "0000"},
+                {"****", "****"},
+                {"*", "*"},
+                {"", ""}
         };
         MineSweeper sweeper = new MineSweeper();
         for (String [] eachRow: testData) {
             MineField mineField = new MineField(eachRow[0]);
             String actualOutput = sweeper.process(mineField);
-            Assert.assertEquals(eachRow[1], actualOutput);
+            assertEquals(eachRow[1], actualOutput);
         }
     }
 }
