@@ -3,11 +3,12 @@ package org.bbelovic.kata.minesweeper;
 public class MineSweeper {
     public String process(MineField mineField) {
         char [] output = new char[mineField.size()];
-        for (int i = 0; i < mineField.size(); i++) {
-            if (!mineField.hasMineOnPosition(i)) {
+        for (int i = 0; mineField.canMoveForward(); i++) {
+            MineFieldPosition mineFieldPosition = mineField.moveForward();
+            if (!mineFieldPosition.isMineField()) {
                 int numberOfAdjacentMines = getNumberOfAdjacentMines(mineField, i);
                 output[i] = (char) numberOfAdjacentMines;
-            } else if (mineField.hasMineOnPosition(i)) {
+            } else if (mineFieldPosition.isMineField()) {
                 output[i] = '*';
             }
         }

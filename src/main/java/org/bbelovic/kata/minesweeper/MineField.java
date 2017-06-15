@@ -9,10 +9,6 @@ public class MineField {
         mines = s;
     }
 
-    public char[] toCharArray() {
-        return mines.toCharArray();
-    }
-
     public int size() {
         return mines.length();
     }
@@ -26,7 +22,9 @@ public class MineField {
         return (position + 1) <= mines.toCharArray().length - 1;
     }
 
-    public void moveForward() {
+    public MineFieldPosition moveForward() {
         position = position + 1;
+        char fieldValue = mines.toCharArray()[position];
+        return new MineFieldPosition(fieldValue);
     }
 }

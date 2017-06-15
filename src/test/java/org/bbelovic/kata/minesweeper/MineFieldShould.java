@@ -4,9 +4,7 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class MineFieldShould {
 
@@ -36,6 +34,21 @@ public class MineFieldShould {
         assertMoveOperationsOnFieldWithLength(1);
         assertMoveOperationsOnFieldWithLength(4);
         assertMoveOperationsOnFieldWithLength(22);
+    }
+
+    @Test
+    public void
+    provide_details_about_current_field_position() {
+        MineField mineField = new MineField(".*.");
+        mineField.canMoveForward();
+        MineFieldPosition position = mineField.moveForward();
+        assertNotNull(position);
+        assertFalse(position.isMineField());
+        mineField.canMoveForward();
+        position = mineField.moveForward();
+        assertNotNull(position);
+        assertTrue(position.isMineField());
+
     }
 
     private void assertMoveOperationsOnFieldWithLength(final int permittedMoves) {
