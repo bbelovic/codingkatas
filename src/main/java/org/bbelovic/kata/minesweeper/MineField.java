@@ -19,11 +19,11 @@ public class MineField {
     public MineFieldPosition moveForward() {
         position = position + 1;
         final char fieldValue = mines[position];
-        final List<Character> neighbours = getAdjacentPositions();
-        return new MineFieldPosition(fieldValue, neighbours);
+        final long adjacentMines = getNumberOfAdjacentMines();
+        return new MineFieldPosition(fieldValue, adjacentMines);
     }
 
-    private List<Character> getAdjacentPositions() {
+    private long getNumberOfAdjacentMines() {
         final List<Character> neighbours = new ArrayList<>();
         if (position - 1 >= 0) {
             neighbours.add(mines[position - 1]);
@@ -31,6 +31,6 @@ public class MineField {
         if (position + 1 < mines.length) {
             neighbours.add(mines[position + 1]);
         }
-        return neighbours;
+        return neighbours.stream().filter(character -> character == '*').count();
     }
 }

@@ -1,15 +1,13 @@
 package org.bbelovic.kata.minesweeper;
 
-import java.util.List;
-
 public class MineFieldPosition {
     private static final char MINE_SYMBOL = '*';
     private final char fieldValue;
-    private final List<Character> neighbours;
+    private final long adjacentMines;
 
-    public MineFieldPosition(char fieldValue, List<Character> neighbours) {
+    public MineFieldPosition(char fieldValue, long adjacentMines) {
         this.fieldValue = fieldValue;
-        this.neighbours = neighbours;
+        this.adjacentMines = adjacentMines;
     }
 
     public boolean isMineField() {
@@ -17,11 +15,6 @@ public class MineFieldPosition {
     }
 
     public long getNumberOfAdjacentMines() {
-        if (isMineField()) {
-            return 0;
-        }
-        return neighbours.stream()
-                .filter(character -> character == MINE_SYMBOL)
-                .count();
+        return adjacentMines;
     }
 }
