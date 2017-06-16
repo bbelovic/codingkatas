@@ -10,25 +10,6 @@ public class MineFieldShould {
 
     @Test
     public void
-    provide_details_about_its_size() {
-        int actualSize = new MineField("").size();
-        assertEquals(0, actualSize);
-        actualSize = new MineField("....").size();
-        assertEquals(4, actualSize);
-    }
-
-    @Test
-    public void
-    tell_whether_there_is_a_mine_on_given_field_position() {
-        MineField mineField = new MineField(".**..");
-        assertFalse(mineField.hasMineOnPosition(0));
-        assertTrue(mineField.hasMineOnPosition(1));
-        assertTrue(mineField.hasMineOnPosition(2));
-        assertFalse(mineField.hasMineOnPosition(3));
-    }
-
-    @Test
-    public void
     tell_whether_one_can_move_forward_on_mine_field() {
         assertMoveOperationsOnFieldWithLength(0);
         assertMoveOperationsOnFieldWithLength(1);

@@ -1,18 +1,18 @@
 package org.bbelovic.kata.minesweeper;
 
 public class MineSweeper {
-    public String process(MineField mineField) {
-        char [] output = new char[mineField.size()];
-        for (int i = 0; mineField.canMoveForward(); i++) {
+    public DeminedField process(MineField mineField) {
+        final DeminedField result = new DeminedField();
+        while (mineField.canMoveForward()) {
             MineFieldPosition mineFieldPosition = mineField.moveForward();
             if (!mineFieldPosition.isMineField()) {
                 long numberOfAdjacentMines = mineFieldPosition.getNumberOfAdjacentMines();
-                output[i] = (char) ('0' + numberOfAdjacentMines);
+                result.recordSafePosition(numberOfAdjacentMines);
             } else if (mineFieldPosition.isMineField()) {
-                output[i] = '*';
+                result.recordMinePosition();
             }
         }
-        return new String(output);
+        return result;
     }
 
 }

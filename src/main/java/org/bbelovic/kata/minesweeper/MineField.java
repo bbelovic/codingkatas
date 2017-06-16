@@ -12,15 +12,6 @@ public class MineField {
         mines = s.toCharArray();
     }
 
-    public int size() {
-        return mines.length;
-    }
-
-    public boolean hasMineOnPosition(int position) {
-        char c = mines[position];
-        return c == '*';
-    }
-
     public boolean canMoveForward() {
         return (position + 1) <= mines.length - 1;
     }
@@ -28,6 +19,11 @@ public class MineField {
     public MineFieldPosition moveForward() {
         position = position + 1;
         final char fieldValue = mines[position];
+        final List<Character> neighbours = getAdjacentPositions();
+        return new MineFieldPosition(fieldValue, neighbours);
+    }
+
+    private List<Character> getAdjacentPositions() {
         final List<Character> neighbours = new ArrayList<>();
         if (position - 1 >= 0) {
             neighbours.add(mines[position - 1]);
@@ -35,6 +31,6 @@ public class MineField {
         if (position + 1 < mines.length) {
             neighbours.add(mines[position + 1]);
         }
-        return new MineFieldPosition(fieldValue, neighbours);
+        return neighbours;
     }
 }
