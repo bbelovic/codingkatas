@@ -3,7 +3,7 @@ package org.bbelovic.kata.minesweeper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DeminedField {
+public class SweepedMineField {
     private final List<String> deminedPositions = new ArrayList<>();
     public String asText() {
         final StringBuilder sb = new StringBuilder();

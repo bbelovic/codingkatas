@@ -1,8 +1,8 @@
 package org.bbelovic.kata.minesweeper;
 
 public class MineSweeper {
-    public DeminedField process(MineField mineField) {
-        final DeminedField result = new DeminedField();
+    public SweepedMineField process(MineField mineField) {
+        final SweepedMineField result = new SweepedMineField();
         while (mineField.canMoveForward()) {
             MineFieldPosition mineFieldPosition = mineField.moveForward();
             if (!mineFieldPosition.isMineField()) {

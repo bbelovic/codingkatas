@@ -21,8 +21,8 @@ public class MineSweeperShould {
         MineSweeper sweeper = new MineSweeper();
         for (String [] eachRow: testData) {
             MineField mineField = new MineField(eachRow[0]);
-            DeminedField deminedField = sweeper.process(mineField);
-            assertEquals(eachRow[1], deminedField.asText());
+            SweepedMineField sweepedMineField = sweeper.process(mineField);
+            assertEquals(eachRow[1], sweepedMineField.asText());
         }
     }
 }
