@@ -23,19 +23,16 @@ public class MineFieldShould {
         MineField mineField = new MineField(".*.");
         mineField.canMoveForward();
         MineFieldPosition position = mineField.moveForward();
-        assertNotNull(position);
-        assertFalse(position.isMineField());
-        assertEquals(1L, position.getNumberOfAdjacentMines());
+        SweepedFieldPosition sweepedFieldPosition = position.toSweepedFieldPosition();
+        assertEquals("1", sweepedFieldPosition.getValue());
         mineField.canMoveForward();
         position = mineField.moveForward();
-        assertNotNull(position);
-        assertTrue(position.isMineField());
-        assertEquals(0L, position.getNumberOfAdjacentMines());
+        sweepedFieldPosition = position.toSweepedFieldPosition();
+        assertEquals("*", sweepedFieldPosition.getValue());
         mineField.canMoveForward();
         position = mineField.moveForward();
-        assertNotNull(position);
-        assertFalse(position.isMineField());
-        assertEquals(1, position.getNumberOfAdjacentMines());
+        sweepedFieldPosition = position.toSweepedFieldPosition();
+        assertEquals("1", sweepedFieldPosition.getValue());
 
     }
 

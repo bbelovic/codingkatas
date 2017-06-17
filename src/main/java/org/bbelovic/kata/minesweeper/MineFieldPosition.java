@@ -10,11 +10,10 @@ public class MineFieldPosition {
         this.adjacentMines = adjacentMines;
     }
 
-    public boolean isMineField() {
-        return fieldValue == MINE_SYMBOL;
-    }
-
-    public long getNumberOfAdjacentMines() {
-        return adjacentMines;
+    public SweepedFieldPosition toSweepedFieldPosition() {
+        if (fieldValue == MINE_SYMBOL) {
+            return new SweepedFieldPosition(String.valueOf(MINE_SYMBOL));
+        }
+        return new SweepedFieldPosition(String.valueOf(adjacentMines));
     }
 }
