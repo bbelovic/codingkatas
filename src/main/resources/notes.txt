@@ -1,0 +1,8 @@
+generics using collections
+wildcard with extends
+wildcard with super
+pecs
+comparable
+- mixing apples with oranges
+comparator
+example from previous dojo explained
