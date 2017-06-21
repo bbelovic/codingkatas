@@ -1,9 +1,11 @@
 package org.bbelovic.kata.generics;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -21,6 +23,9 @@ public class WildcardWithExtendsShould {
         List<Fruit> fruits = asList(new Orange(3), new Apple(4));
         concatenate(fruits);
 
+
+        Set<Fruit> fruitSet = toSet(fruits);
+        fruitSet = toSet(fruits);
     }
 
 
@@ -30,5 +35,14 @@ public class WildcardWithExtendsShould {
             sb.append(collection.get(i).getName());
         }
         return sb.toString();
+    }
+
+
+    private <T> Set<T> toSet(List<T> inputCollection) {
+        Set<T> c = new HashSet<>();
+        for (int i = 0; i < inputCollection.size(); i++) {
+            c.add(inputCollection.get(i));
+        }
+        return c;
     }
 }
