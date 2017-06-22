@@ -12,11 +12,11 @@ public class MineField {
         mines = s.toCharArray();
     }
 
-    public boolean canMoveForward() {
+    private boolean canMoveForward() {
         return (position + 1) <= mines.length - 1;
     }
 
-    public MineFieldPosition moveForward() {
+    private MineFieldPosition moveForward() {
         position = position + 1;
         final char fieldValue = mines[position];
         final long adjacentMines = getNumberOfAdjacentMines();
