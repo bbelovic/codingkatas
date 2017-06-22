@@ -1,13 +1,13 @@
 package org.bbelovic.kata.minesweeper;
 
-public class SweepedFieldPosition {
+class SweptFieldPosition {
     private final String value;
 
-    public SweepedFieldPosition(String value) {
+    SweptFieldPosition(String value) {
         this.value = value;
     }
 
-    public String getValue() {
+    String getValue() {
         return value;
     }
 }

@@ -9,7 +9,7 @@ public class MineFieldShould {
     @Test
     public void produce_swept_output() {
         MineField mineField = new MineField(".*.");
-        SweepedMineField actual = mineField.sweep();
+        SweptMineField actual = mineField.sweep();
         assertEquals("1*1", actual.asText());
     }
 }

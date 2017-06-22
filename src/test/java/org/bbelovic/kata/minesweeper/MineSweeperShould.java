@@ -8,7 +8,7 @@ public class MineSweeperShould {
 
     @Test
     public void
-    produce_output_with_number_of_mines_adjacent_to_each_safe_field() {
+    produce_swept_minefield_output_for_single_line_minefield_input() {
         String [][] testData = new String [][] {
                 {"*...", "*100"},
                 {".*..", "1*10"},
@@ -21,8 +21,8 @@ public class MineSweeperShould {
         MineSweeper sweeper = new MineSweeper();
         for (String [] eachRow: testData) {
             MineField mineField = new MineField(eachRow[0]);
-            SweepedMineField sweepedMineField = sweeper.sweep(mineField);
-            assertEquals(eachRow[1], sweepedMineField.asText());
+            SweptMineField sweptMineField = sweeper.sweep(mineField);
+            assertEquals(eachRow[1], sweptMineField.asText());
         }
     }
 }

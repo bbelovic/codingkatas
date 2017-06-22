@@ -34,13 +34,13 @@ final class MineField {
         return neighbours.stream().filter(character -> character == '*').count();
     }
 
-    SweepedMineField sweep() {
-        final SweepedMineField sweepedMineField = new SweepedMineField();
+    SweptMineField sweep() {
+        final SweptMineField sweptMineField = new SweptMineField();
         while (canMoveForward()) {
             MineFieldPosition mineFieldPosition = moveForward();
-            SweepedFieldPosition sweepedFieldPosition = mineFieldPosition.toSweepedFieldPosition();
-            sweepedMineField.addPosition(sweepedFieldPosition);
+            SweptFieldPosition sweptFieldPosition = mineFieldPosition.toSweepedFieldPosition();
+            sweptMineField.addPosition(sweptFieldPosition);
         }
-        return sweepedMineField;
+        return sweptMineField;
     }
 }
