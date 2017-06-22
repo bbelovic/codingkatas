@@ -33,4 +33,14 @@ public class MineField {
         }
         return neighbours.stream().filter(character -> character == '*').count();
     }
+
+    public SweepedMineField sweep() {
+        final SweepedMineField sweepedMineField = new SweepedMineField();
+        while (canMoveForward()) {
+            MineFieldPosition mineFieldPosition = moveForward();
+            SweepedFieldPosition sweepedFieldPosition = mineFieldPosition.toSweepedFieldPosition();
+            sweepedMineField.addPosition(sweepedFieldPosition);
+        }
+        return sweepedMineField;
+    }
 }

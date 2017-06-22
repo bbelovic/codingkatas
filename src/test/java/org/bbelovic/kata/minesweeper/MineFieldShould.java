@@ -4,9 +4,17 @@ import org.junit.Test;
 
 import java.util.Random;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class MineFieldShould {
+
+    @Test
+    public void produce_swept_output() {
+        MineField mineField = new MineField(".*.");
+        SweepedMineField actual = mineField.sweep();
+        assertEquals("1*1", actual.asText());
+    }
 
     @Test
     public void
@@ -33,7 +41,6 @@ public class MineFieldShould {
         position = mineField.moveForward();
         sweepedFieldPosition = position.toSweepedFieldPosition();
         assertEquals("1", sweepedFieldPosition.getValue());
-
     }
 
     private void assertMoveOperationsOnFieldWithLength(final int permittedMoves) {
