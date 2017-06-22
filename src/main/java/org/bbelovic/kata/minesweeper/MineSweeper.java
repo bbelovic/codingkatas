@@ -1,7 +1,7 @@
 package org.bbelovic.kata.minesweeper;
 
-public class MineSweeper {
-    public SweepedMineField process(MineField mineField) {
+class MineSweeper {
+    SweepedMineField sweep(MineField mineField) {
         return mineField.sweep();
     }
 

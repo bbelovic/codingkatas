@@ -3,13 +3,13 @@ package org.bbelovic.kata.minesweeper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MineField {
+final class MineField {
 
     private final char[] mines;
     private int position = -1;
 
-    public MineField(String s) {
-        mines = s.toCharArray();
+    MineField(final String input) {
+        mines = input.toCharArray();
     }
 
     private boolean canMoveForward() {
@@ -34,7 +34,7 @@ public class MineField {
         return neighbours.stream().filter(character -> character == '*').count();
     }
 
-    public SweepedMineField sweep() {
+    SweepedMineField sweep() {
         final SweepedMineField sweepedMineField = new SweepedMineField();
         while (canMoveForward()) {
             MineFieldPosition mineFieldPosition = moveForward();

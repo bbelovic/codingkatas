@@ -3,9 +3,9 @@ package org.bbelovic.kata.minesweeper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SweepedMineField {
+class SweepedMineField {
     private final List<SweepedFieldPosition> deminedPositions = new ArrayList<>();
-    public String asText() {
+    String asText() {
         final StringBuilder sb = new StringBuilder();
         for (SweepedFieldPosition each: deminedPositions) {
             sb.append(each.getValue());
@@ -13,7 +13,7 @@ public class SweepedMineField {
         return sb.toString();
     }
 
-    public void addPosition(SweepedFieldPosition sweepedFieldPosition) {
+    void addPosition(SweepedFieldPosition sweepedFieldPosition) {
        deminedPositions.add(sweepedFieldPosition);
     }
 }
