@@ -8,21 +8,22 @@ public class MineSweeperShould {
 
     @Test
     public void
-    produce_swept_minefield_output_for_single_line_minefield_input() {
+    produce_swept_minefield_output_for_multi_line_minefield_input() {
         String [][] testData = new String [][] {
-                {"*...", "*100"},
-                {".*..", "1*10"},
-                {"*.*.", "*2*1"},
-                {"....", "0000"},
-                {"****", "****"},
-                {"*", "*"},
-                {"", ""}
+                {"1 4\n*...", "*100"},
+                {"1 4\n.*..", "1*10"},
+                {"1 4\n*.*.", "*2*1"},
+                {"1 4\n....", "0000"},
+                {"1 4\n****", "****"},
+                {"1 1\n*", "*"},
+                {"0 0\n", ""},
+                {"2 2\n..\n..", "00\n00"}
         };
-        MineSweeper sweeper = new MineSweeper();
-        for (String [] eachRow: testData) {
-            MineField mineField = new MineField(eachRow[0]);
-            SweptMineField sweptMineField = sweeper.sweep(mineField);
-            assertEquals(eachRow[1], sweptMineField.asText());
+
+        MineSweeper mineSweeper = new MineSweeper();
+        for (final String[] each: testData) {
+            SweptMineField actual = mineSweeper.sweep(new MineField(each[0]));
+            assertEquals(each[1], actual.asText());
         }
     }
 }
