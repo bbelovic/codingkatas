@@ -5,11 +5,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class MineSweeperShould {
-
     @Test
     public void
     produce_swept_minefield_output_for_multi_line_minefield_input() {
         String [][] testData = new String [][] {
+                {"3 3\n...\n..*\n...", "011\n01*\n011"},
+                {"4 4\n*...\n....\n.*..\n....", "*100\n2210\n1*10\n1110"},
                 {"1 4\n*...", "*100"},
                 {"1 4\n.*..", "1*10"},
                 {"1 4\n*.*.", "*2*1"},

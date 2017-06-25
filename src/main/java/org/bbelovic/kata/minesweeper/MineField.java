@@ -6,9 +6,7 @@ import java.util.stream.Stream;
 
 final class MineField {
 
-    private final char[] mines;
     private char [][] mines2d;
-    private int position = -1;
     private int colsPosition = -1;
     private int rowsPosition = -1;
 
@@ -23,13 +21,9 @@ final class MineField {
                 for (int i = 1; i < split.length; i++) {
                     mines2d[i-1] = split[i].toCharArray();
                 }
-                mines = split[1].toCharArray();
             } else {
                 mines2d = new char[0][0];
-                mines = "".toCharArray();
             }
-        } else {
-            mines = input.toCharArray();
         }
     }
 
@@ -55,7 +49,6 @@ final class MineField {
             rowsPosition = rowsPosition + 1;
             colsPosition = 0;
         }
-        position = position + 1;
         final char fieldValue = mines2d[rowsPosition][colsPosition];
         final long adjacentMines = getNumberOfAdjacentMines();
         return new MineFieldPosition(fieldValue, adjacentMines);
