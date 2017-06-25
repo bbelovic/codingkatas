@@ -1,7 +1,5 @@
 package org.bbelovic.kata.minesweeper;
 
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 final class MineField {
@@ -27,16 +25,27 @@ final class MineField {
         }
     }
 
+    SweptMineField sweep() {
+        int colCount = mines2d.length == 0 ? 0 : mines2d[0].length;
+        final SweptMineField sweptMineField = new SweptMineField(colCount);
+        while (canMoveForward()) {
+            MineFieldPosition mineFieldPosition = moveForward();
+            SweptFieldPosition sweptFieldPosition = mineFieldPosition.toSweepedFieldPosition();
+            sweptMineField.addPosition(sweptFieldPosition);
+        }
+        return sweptMineField;
+    }
+
+    private boolean canMoveForward() {
+        return canMoveForwardCols() || canMoveForwardRows();
+    }
+
     private boolean canMoveForwardCols() {
         return mines2d.length != 0 && (colsPosition + 1) <= mines2d[0].length - 1;
     }
 
     private boolean canMoveForwardRows() {
         return (rowsPosition + 1) <= mines2d.length - 1;
-    }
-
-    private boolean canMoveForward() {
-        return canMoveForwardCols() || canMoveForwardRows();
     }
 
     private MineFieldPosition moveForward() {
@@ -55,33 +64,29 @@ final class MineField {
     }
 
     private long getNumberOfAdjacentMines() {
-        final int colCount = mines2d[0].length;
-        final int rowCount = mines2d.length;
-        Predicate<int[]> dimensions =
-                (vector) -> vector[0] + colsPosition >= 0 && vector[0] + colsPosition < colCount &&
-                            vector[1] + rowsPosition >= 0 && vector[1] + rowsPosition < rowCount;
-        Function<int[], Character> neighbourMapper = (vector) ->
-                mines2d[vector[1] + rowsPosition][ vector[0] + colsPosition];
-        Predicate<Character> isMineField = (Character character) ->  character == '*';
-        return moveVectors()
-                .filter(dimensions)
-                .map(neighbourMapper)
-                .filter(isMineField)
+        return adjacentPositionsCoordinates()
+                .filter(this::incompatibleCoordinates)
+                .map(this::toAdjacentPositions)
+                .filter(this::minesOnly)
                 .count();
     }
 
-    SweptMineField sweep() {
-        int colCount = mines2d.length == 0 ? 0 : mines2d[0].length;
-        final SweptMineField sweptMineField = new SweptMineField(colCount);
-        while (canMoveForward()) {
-            MineFieldPosition mineFieldPosition = moveForward();
-            SweptFieldPosition sweptFieldPosition = mineFieldPosition.toSweepedFieldPosition();
-            sweptMineField.addPosition(sweptFieldPosition);
-        }
-        return sweptMineField;
+    private boolean incompatibleCoordinates(final int[] vector) {
+        final int colCount = mines2d[0].length;
+        final int rowCount = mines2d.length;
+        return vector[0] + colsPosition >= 0 && vector[0] + colsPosition < colCount &&
+                vector[1] + rowsPosition >= 0 && vector[1] + rowsPosition < rowCount;
     }
 
-    private Stream<int[]> moveVectors() {
+    private char toAdjacentPositions(int [] vector) {
+        return mines2d[vector[1] + rowsPosition][ vector[0] + colsPosition];
+    }
+
+    private boolean minesOnly(Character character) {
+        return character == '*';
+    }
+
+    private Stream<int[]> adjacentPositionsCoordinates() {
         return Stream.of(new int [] {1, 0}, new int [] {0, 1}, new int [] {1, 1},
                          new int [] {-1, 0}, new int [] {0, -1}, new int [] {-1, -1},
                          new int [] {-1, 1}, new int [] {1, -1}
