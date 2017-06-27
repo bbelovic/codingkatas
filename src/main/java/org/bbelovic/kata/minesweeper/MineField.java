@@ -4,6 +4,7 @@ import java.util.stream.Stream;
 
 final class MineField {
 
+    private static final char MINE_SYMBOL = '*';
     private char [][] mines2d;
 
     MineField(final String input) {
@@ -23,16 +24,24 @@ final class MineField {
         }
     }
 
+    private String getSweptValue(final int rowIndex, final int columnIndex) {
+        if (isSafeField(rowIndex, columnIndex)) {
+            final long adjacentMines = getNumberOfAdjacentMines(columnIndex, rowIndex);
+            return String.valueOf(adjacentMines);
+        }
+        return String.valueOf(mines2d[rowIndex][columnIndex]);
+    }
+
+    private boolean isSafeField(final int rowIndex, final int columnIndex) {
+        return mines2d[rowIndex][columnIndex] != MINE_SYMBOL;
+    }
+
     SweptMineField sweep() {
         int colCount = mines2d.length == 0 ? 0 : mines2d[0].length;
         final SweptMineField sweptMineField = new SweptMineField(colCount);
         for (int rowIndex = 0; rowIndex < mines2d.length; rowIndex++) {
             for (int columnIndex = 0; columnIndex < mines2d[rowIndex].length; columnIndex++) {
-                final char fieldValue = mines2d[rowIndex][columnIndex];
-                final long adjacentMines = getNumberOfAdjacentMines(columnIndex, rowIndex);
-                final MineFieldPosition mineFieldPosition = new MineFieldPosition(fieldValue, adjacentMines);
-                final SweptFieldPosition sweptFieldPosition = mineFieldPosition.toSweepedFieldPosition();
-                sweptMineField.addPosition(sweptFieldPosition);
+                sweptMineField.addPosition(new SweptFieldPosition(getSweptValue(rowIndex, columnIndex)));
             }
         }
         return sweptMineField;
@@ -58,7 +67,7 @@ final class MineField {
     }
 
     private boolean minesOnly(Character character) {
-        return character == '*';
+        return character == MINE_SYMBOL;
     }
 
     private Stream<int[]> adjacentPositionsCoordinates() {
