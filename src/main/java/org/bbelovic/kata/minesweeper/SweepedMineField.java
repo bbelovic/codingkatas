@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class SweptMineField {
-    private final List<SweptFieldPosition> deminedPositions = new ArrayList<>();
+    private final List<String> deminedPositions = new ArrayList<>();
     private final int colCount;
 
     public SweptMineField(int colCount) {
@@ -14,8 +14,8 @@ class SweptMineField {
     String asText() {
         final StringBuilder sb = new StringBuilder();
         int counter = 0;
-        for (SweptFieldPosition each: deminedPositions) {
-            sb.append(each.getValue());
+        for (String each: deminedPositions) {
+            sb.append(each);
             if (++counter == colCount) {
                 sb.append("\n");
                 counter = 0;
@@ -24,7 +24,7 @@ class SweptMineField {
         return sb.toString().trim();
     }
 
-    void addPosition(SweptFieldPosition sweptFieldPosition) {
-       deminedPositions.add(sweptFieldPosition);
+    void addSweptValue(String sweptValue) {
+       deminedPositions.add(sweptValue);
     }
 }

@@ -29,7 +29,7 @@ final class MineField {
         final SweptMineField sweptMineField = new SweptMineField(colCount);
         for (int rowIndex = 0; rowIndex < mines2d.length; rowIndex++) {
             for (int columnIndex = 0; columnIndex < mines2d[rowIndex].length; columnIndex++) {
-                sweptMineField.addPosition(new SweptFieldPosition(getSweptValue(rowIndex, columnIndex)));
+                sweptMineField.addSweptValue(getSweptValue(rowIndex, columnIndex));
             }
         }
         return sweptMineField;
