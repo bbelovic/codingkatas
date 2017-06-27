@@ -5,8 +5,6 @@ import java.util.stream.Stream;
 final class MineField {
 
     private char [][] mines2d;
-    private int colsPosition = -1;
-    private int rowsPosition = -1;
 
     MineField(final String input) {
         if (input.contains("\n")) {
@@ -28,36 +26,34 @@ final class MineField {
     SweptMineField sweep() {
         int colCount = mines2d.length == 0 ? 0 : mines2d[0].length;
         final SweptMineField sweptMineField = new SweptMineField(colCount);
-        for (int i = 0; i < mines2d.length; i++) {
-            for (int j = 0; j < mines2d[i].length; j++) {
-                char fieldValue = mines2d[i][j];
-                rowsPosition = i;
-                colsPosition = j;
-                long adjacentMines = getNumberOfAdjacentMines();
-                MineFieldPosition mineFieldPosition = new MineFieldPosition(fieldValue, adjacentMines);
-                SweptFieldPosition sweptFieldPosition = mineFieldPosition.toSweepedFieldPosition();
+        for (int rowIndex = 0; rowIndex < mines2d.length; rowIndex++) {
+            for (int columnIndex = 0; columnIndex < mines2d[rowIndex].length; columnIndex++) {
+                final char fieldValue = mines2d[rowIndex][columnIndex];
+                final long adjacentMines = getNumberOfAdjacentMines(columnIndex, rowIndex);
+                final MineFieldPosition mineFieldPosition = new MineFieldPosition(fieldValue, adjacentMines);
+                final SweptFieldPosition sweptFieldPosition = mineFieldPosition.toSweepedFieldPosition();
                 sweptMineField.addPosition(sweptFieldPosition);
             }
         }
         return sweptMineField;
     }
 
-    private long getNumberOfAdjacentMines() {
+    private long getNumberOfAdjacentMines(final int colsPosition, final int rowsPosition) {
         return adjacentPositionsCoordinates()
-                .filter(this::incompatibleCoordinates)
-                .map(this::toAdjacentPositions)
+                .filter(vector -> incompatibleCoordinates(vector, colsPosition, rowsPosition))
+                .map(vector1 -> toAdjacentPositions(vector1, rowsPosition, colsPosition))
                 .filter(this::minesOnly)
                 .count();
     }
 
-    private boolean incompatibleCoordinates(final int[] vector) {
+    private boolean incompatibleCoordinates(final int[] vector, int colsPosition, int rowsPosition) {
         final int colCount = mines2d[0].length;
         final int rowCount = mines2d.length;
         return vector[0] + colsPosition >= 0 && vector[0] + colsPosition < colCount &&
                 vector[1] + rowsPosition >= 0 && vector[1] + rowsPosition < rowCount;
     }
 
-    private char toAdjacentPositions(int [] vector) {
+    private char toAdjacentPositions(int[] vector, int rowsPosition, int colsPosition) {
         return mines2d[vector[1] + rowsPosition][ vector[0] + colsPosition];
     }
 
