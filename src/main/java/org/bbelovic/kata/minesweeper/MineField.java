@@ -24,6 +24,17 @@ final class MineField {
         }
     }
 
+    SweptMineField sweep() {
+        int colCount = mines2d.length == 0 ? 0 : mines2d[0].length;
+        final SweptMineField sweptMineField = new SweptMineField(colCount);
+        for (int rowIndex = 0; rowIndex < mines2d.length; rowIndex++) {
+            for (int columnIndex = 0; columnIndex < mines2d[rowIndex].length; columnIndex++) {
+                sweptMineField.addPosition(new SweptFieldPosition(getSweptValue(rowIndex, columnIndex)));
+            }
+        }
+        return sweptMineField;
+    }
+
     private String getSweptValue(final int rowIndex, final int columnIndex) {
         if (isSafeField(rowIndex, columnIndex)) {
             final long adjacentMines = getNumberOfAdjacentMines(columnIndex, rowIndex);
@@ -36,21 +47,10 @@ final class MineField {
         return mines2d[rowIndex][columnIndex] != MINE_SYMBOL;
     }
 
-    SweptMineField sweep() {
-        int colCount = mines2d.length == 0 ? 0 : mines2d[0].length;
-        final SweptMineField sweptMineField = new SweptMineField(colCount);
-        for (int rowIndex = 0; rowIndex < mines2d.length; rowIndex++) {
-            for (int columnIndex = 0; columnIndex < mines2d[rowIndex].length; columnIndex++) {
-                sweptMineField.addPosition(new SweptFieldPosition(getSweptValue(rowIndex, columnIndex)));
-            }
-        }
-        return sweptMineField;
-    }
-
     private long getNumberOfAdjacentMines(final int colsPosition, final int rowsPosition) {
         return adjacentPositionsCoordinates()
                 .filter(vector -> incompatibleCoordinates(vector, colsPosition, rowsPosition))
-                .map(vector1 -> toAdjacentPositions(vector1, rowsPosition, colsPosition))
+                .map(v -> toAdjacentPositions(v, rowsPosition, colsPosition))
                 .filter(this::minesOnly)
                 .count();
     }
@@ -66,7 +66,7 @@ final class MineField {
         return mines2d[vector[1] + rowsPosition][ vector[0] + colsPosition];
     }
 
-    private boolean minesOnly(Character character) {
+    private boolean minesOnly(final Character character) {
         return character == MINE_SYMBOL;
     }
 
