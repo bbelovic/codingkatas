@@ -28,39 +28,18 @@ final class MineField {
     SweptMineField sweep() {
         int colCount = mines2d.length == 0 ? 0 : mines2d[0].length;
         final SweptMineField sweptMineField = new SweptMineField(colCount);
-        while (canMoveForward()) {
-            MineFieldPosition mineFieldPosition = moveForward();
-            SweptFieldPosition sweptFieldPosition = mineFieldPosition.toSweepedFieldPosition();
-            sweptMineField.addPosition(sweptFieldPosition);
+        for (int i = 0; i < mines2d.length; i++) {
+            for (int j = 0; j < mines2d[i].length; j++) {
+                char fieldValue = mines2d[i][j];
+                rowsPosition = i;
+                colsPosition = j;
+                long adjacentMines = getNumberOfAdjacentMines();
+                MineFieldPosition mineFieldPosition = new MineFieldPosition(fieldValue, adjacentMines);
+                SweptFieldPosition sweptFieldPosition = mineFieldPosition.toSweepedFieldPosition();
+                sweptMineField.addPosition(sweptFieldPosition);
+            }
         }
         return sweptMineField;
-    }
-
-    private boolean canMoveForward() {
-        return canMoveForwardCols() || canMoveForwardRows();
-    }
-
-    private boolean canMoveForwardCols() {
-        return mines2d.length != 0 && (colsPosition + 1) <= mines2d[0].length - 1;
-    }
-
-    private boolean canMoveForwardRows() {
-        return (rowsPosition + 1) <= mines2d.length - 1;
-    }
-
-    private MineFieldPosition moveForward() {
-        if (rowsPosition == -1) {
-            rowsPosition = rowsPosition + 1;
-        }
-        if (canMoveForwardCols()) {
-            colsPosition = colsPosition + 1;
-        } else if (canMoveForwardRows()) {
-            rowsPosition = rowsPosition + 1;
-            colsPosition = 0;
-        }
-        final char fieldValue = mines2d[rowsPosition][colsPosition];
-        final long adjacentMines = getNumberOfAdjacentMines();
-        return new MineFieldPosition(fieldValue, adjacentMines);
     }
 
     private long getNumberOfAdjacentMines() {
