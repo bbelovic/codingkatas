@@ -3,17 +3,35 @@ package org.bbelovic.kata.minesweeper;
 import java.util.List;
 import java.util.stream.Stream;
 
+import static java.lang.String.format;
+import static java.util.Objects.requireNonNull;
+
 final class MineField {
 
     private static final char MINE_SYMBOL = '*';
-    private char [][] mines2d;
+    private final char [][] mines2d;
 
-    MineField(int rows, int cols, List<Character> fields) {
+    MineField(final int rows, final int cols, final List<Character> fields) {
+        checkPreconditions(rows, cols, fields);
         mines2d = new char[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 mines2d[i][j] = fields.get(i*cols + j);
             }
+        }
+    }
+
+    private void checkPreconditions(int rows, int cols, List<Character> fields) {
+        requireNonNull(fields, "Collection of mine fields is required");
+        if (rows < 0) {
+            throw new IllegalArgumentException("Negative row count: "+ rows);
+        }
+        if (cols < 0) {
+            throw new IllegalArgumentException("Negative column count: "+ cols);
+        }
+        if (rows * cols != fields.size()) {
+            String message = format("Number of minefield positions [%d] differs from rows and columns product [%d]", fields.size(), rows * cols);
+            throw new IllegalArgumentException(message);
         }
     }
 
