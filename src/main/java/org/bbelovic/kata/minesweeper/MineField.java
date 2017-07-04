@@ -1,5 +1,6 @@
 package org.bbelovic.kata.minesweeper;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -86,5 +87,18 @@ final class MineField {
                          new int [] {-1, 0}, new int [] {0, -1}, new int [] {-1, -1},
                          new int [] {-1, 1}, new int [] {1, -1}
         );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MineField mineField = (MineField) o;
+        return Arrays.deepEquals(mines2d, mineField.mines2d);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(mines2d);
     }
 }
