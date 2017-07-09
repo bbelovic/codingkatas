@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static java.lang.String.format;
+import static java.util.Arrays.deepToString;
 import static java.util.Objects.requireNonNull;
 
 final class MineField {
@@ -100,5 +101,10 @@ final class MineField {
     @Override
     public int hashCode() {
         return Arrays.deepHashCode(mines2d);
+    }
+
+    @Override
+    public String toString() {
+        return format("MineField[mines=%s]", deepToString(mines2d));
     }
 }
