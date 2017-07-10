@@ -42,12 +42,12 @@ public class MineFieldLoaderShould {
     @Test
     public void
     load_data_from_file_into_string() {
-        Path path = getPathtoFile();
+        Path path = getPathToFile();
         MineField actual = loader.load(path);
         assertEquals(expectedMinefield, actual);
     }
 
-    private Path getPathtoFile() {
+    private Path getPathToFile() {
         URL resource = Thread.currentThread().getContextClassLoader().getResource(filename);
         if (resource == null) {
             throw new IllegalStateException(format("Unable to create path for input file [%s]", filename));
