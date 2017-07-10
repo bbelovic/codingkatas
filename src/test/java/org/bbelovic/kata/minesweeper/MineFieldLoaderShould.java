@@ -5,10 +5,14 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collection;
+import java.util.List;
 
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
@@ -55,4 +59,10 @@ public class MineFieldLoaderShould {
         return Paths.get(resource.getFile());
     }
 
+    @Test
+    public void test() throws IOException {
+        Path pathToFile = getPathToFile();
+        List<String> strings = Files.readAllLines(pathToFile);
+        System.err.println(filename + "=" + strings.size());
+    }
 }
