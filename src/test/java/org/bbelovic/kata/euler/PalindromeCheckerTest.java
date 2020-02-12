@@ -1,20 +1,27 @@
 package org.bbelovic.kata.euler;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PalindromeCheckerTest {
-    @Test
-    public void should_detect_palindrome() {
+    @ParameterizedTest
+    @MethodSource("testData")
+    public void should_detect_palindrome(String wordToTest, boolean expectedResult) {
         PalindromeChecker checker = new PalindromeChecker();
-        for (var target: List.of("radar", "9009", "eye", "202", "11")) {
-            System.out.println("checking: " + target);
-            Assert.assertTrue(checker.isPalindrome(target));
-        }
-        for (var target: List.of("ok")) {
-            Assert.assertFalse(checker.isPalindrome(target));
-        }
+        assertThat(checker.isPalindrome(wordToTest)).isEqualTo(expectedResult);
+    }
+
+    private static Object[][] testData() {
+        return new Object[][] {
+                {"radar", true},
+                {"9009", true},
+                {"eye", true},
+                {"11", true},
+                {"202", true},
+                {"bridge", false},
+                {"ok", false}
+        };
     }
 }

@@ -1,14 +1,13 @@
 package org.bbelovic.kata.generics;
 
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.function.Function;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ComparableShould {
 
@@ -32,7 +31,7 @@ public class ComparableShould {
 
         Comparator<Orange> orangeComparator = naturalOrder(Orange::getSize);
         Orange max = max(oranges, orangeComparator);
-        Assert.assertEquals(10, max.getSize());
+        assertEquals(10, max.getSize());
 
     }
 
@@ -72,9 +71,7 @@ public class ComparableShould {
     }
 
     private <T> void copy(List<? super T> dst, List<? extends T> src) {
-        for (int i = 0; i < src.size(); i++) {
-            dst.add(src.get(i));
-        }
+        dst.addAll(src);
     }
 
 

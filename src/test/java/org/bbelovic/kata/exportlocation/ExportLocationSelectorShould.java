@@ -1,12 +1,11 @@
 package org.bbelovic.kata.exportlocation;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ExportLocationSelectorShould {
 
@@ -21,10 +20,12 @@ public class ExportLocationSelectorShould {
         assertEquals(expected, actual);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void
     signal_error_when_no_export_location_matches_shared_id_criteria() {
-        selector.chooseExportLocation(EXPORT_LOCATIONS, 10L);
+        assertThrows(RuntimeException.class, () -> {
+            selector.chooseExportLocation(EXPORT_LOCATIONS, 10L);
+        });
     }
 
     @Test
@@ -35,10 +36,12 @@ public class ExportLocationSelectorShould {
         assertEquals(expected, actual);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void
     signal_error_when_no_export_location_matches_isAdmin_criteria() {
-        selector.chooseExportLocation(EXPORT_LOCATIONS, 2L);
+        assertThrows(RuntimeException.class, () -> {
+            selector.chooseExportLocation(EXPORT_LOCATIONS, 2L);
+        });
     }
 
     @Test
@@ -46,13 +49,13 @@ public class ExportLocationSelectorShould {
     favour_export_location_whose_preferred_property_is_set_to_true() {
         ExportLocation actual = selector.chooseExportLocation(EXPORT_LOCATIONS, 1L);
         ExportLocation expected = new ExportLocation(1L, false, true);
-        Assert.assertEquals(expected, actual);
+        assertEquals(expected, actual);
     }
 
 
 
     private static List<ExportLocation> createExportLocations() {
-        return asList(new ExportLocation(1L, false, false),
+        return List.of(new ExportLocation(1L, false, false),
                 new ExportLocation(1L, false, true),
                 new ExportLocation(2L, true, true),
                 new ExportLocation(3L, true, true),

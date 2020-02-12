@@ -1,18 +1,20 @@
 package org.bbelovic.kata.generics;
 
-import org.junit.Assert;
-import org.junit.Test;
+
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SubTypingTest {
     @Test
     public void test() {
         // Apple extend Fruit (extends Object)
         // Apple is subtype of Fruit which is subtype of Object
-        Assert.assertTrue(new Apple(1) instanceof Fruit);
+        assertTrue(new Apple(1) instanceof Fruit);
 
 
         Fruit fruit = new Apple(1);
@@ -22,10 +24,10 @@ public class SubTypingTest {
         // ArrayList is subtype of List
 
         List<Fruit> fruits = new ArrayList<>();
-        Assert.assertTrue(fruits instanceof Collection);
+        assertTrue(fruits instanceof Collection);
         Collection<Fruit> c = fruits;
 
-        Assert.assertTrue(fruits instanceof ArrayList);
+        assertTrue(fruits instanceof ArrayList);
 
         fruits.add(new Apple(1));
         fruits.add(new Orange(2));

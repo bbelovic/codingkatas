@@ -1,40 +1,25 @@
 package org.bbelovic.kata.minesweeper;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@RunWith(Parameterized.class)
 public class MineFieldShould {
 
-    private int rows;
-    private int cols;
-    private String mineFieldPositions;
-    private String expectedOutput;
-
-    public MineFieldShould(int rows, int cols, String mineFieldPositions, String expectedOutput) {
-        this.rows = rows;
-        this.cols = cols;
-        this.mineFieldPositions = mineFieldPositions;
-        this.expectedOutput = expectedOutput;
-    }
-
-    @Test
+    @ParameterizedTest
+    @MethodSource("testData")
     public void
-    produce_swept_output_for_correct_input() {
+    produce_swept_output_for_correct_input(int rows, int cols, String mineFieldPositions, String expectedOutput) {
         final List<Character> fields = getMineFieldPositionsCollection(mineFieldPositions);
         final MineField mineField = new MineField(rows, cols, fields);
         final SweptMineField actual = mineField.sweep();
         assertEquals(expectedOutput, actual.asText());
     }
 
-    @Parameters(name = "{index}: MineField({0}, {1}, {2}).sweep() == {3}")
     public static Object[][] testData() {
         return new Object [][] {
                     {3, 3, ".....*...", "011\n01*\n011"},
