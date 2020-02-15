@@ -12,7 +12,7 @@ public class ProgressiveTaxCalculator {
 
     public BigDecimal calculate(BigDecimal income) {
         BigDecimal tax = BigDecimal.ZERO;
-        int lowBound = 0;
+        long lowBound = 0L;
         for (var entry: taxBrackets.entrySet()) {
             var bracket = entry.getKey() - lowBound;
             if (income.compareTo(BigDecimal.valueOf(bracket)) > 0) {
@@ -22,6 +22,7 @@ public class ProgressiveTaxCalculator {
                 break;
             }
             income = income.subtract(BigDecimal.valueOf(bracket));
+            lowBound = entry.getKey();
         }
         return tax;
     }
